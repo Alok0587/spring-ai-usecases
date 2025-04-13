@@ -13,7 +13,7 @@ import com.example.demospringai.services.AiService;
 @Controller
 public class ImageAnalyzerController {
 
-    private static final String UPLOAD_DIR = "/Users/bharaththippireddy/Documents/springai/images/uploads/";
+    private static final String UPLOAD_DIR = "/Users/akuma14/Documents/springai/images/uploads/";
     
     @Autowired
     private AiService service;
@@ -26,8 +26,6 @@ public class ImageAnalyzerController {
 
     @PostMapping("/imageAnalyzer")
     public String uploadImage(String prompt, @RequestParam("file") MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
-
-
         return "imageAnalyzer";
     }
 }

@@ -14,7 +14,7 @@ import com.example.demospringai.services.AiService;
 public class DietHelperController {
 
     // Define the folder where images will be saved
-    private static final String UPLOAD_DIR = "/Users/bharaththippireddy/Documents/springai/images/uploads/";
+    private static final String UPLOAD_DIR = "/Users/akuma14/Documents/springai/images/uploads/";
     
     @Autowired
     private AiService service;
