@@ -11,6 +11,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.moderation.ModerationModel;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AiService {
 
     @Autowired
     private EmbeddingModel embeddingModel;
+
 
     @Autowired
     private VectorStore vectorStore;
@@ -118,5 +120,9 @@ public class AiService {
 
     public String getProductData(String query) {
         return chatClient.prompt(query).advisors(new QuestionAnswerAdvisor(vectorStore)).call().content();
+    }
+
+    public String moderate(String text) {
+         return "Not Configured yet. Only Open AI has that";
     }
 }

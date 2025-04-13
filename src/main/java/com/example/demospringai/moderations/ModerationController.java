@@ -21,6 +21,8 @@ public class ModerationController {
 
     @PostMapping("/moderation")
     public String getChatResponse(@RequestParam("text") String text, Model model) {
+        String response= chatService.moderate(text);
+        model.addAttribute("response", response);
         return "moderation";
     }
 }
