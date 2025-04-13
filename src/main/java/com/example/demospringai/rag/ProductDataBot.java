@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demospringai.services.OpenAiService;
+import com.example.demospringai.services.AiService;
 @Controller
 public class ProductDataBot {
 
 	@Autowired
-	private OpenAiService service;
+	private AiService service;
 
 	@GetMapping("/showProductDataBot")
 	public String showProductDataBot() {
@@ -22,7 +22,8 @@ public class ProductDataBot {
 
 	@PostMapping("/productDataBot")
 	public String productDataBot(@RequestParam String query, Model model) {
-
+		String response = service.getProductData(query);
+		model.addAttribute("response", response);
 		return "productDataBot";
 
 	}

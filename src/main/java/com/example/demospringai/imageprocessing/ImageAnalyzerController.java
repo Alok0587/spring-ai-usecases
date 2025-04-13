@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.example.demospringai.services.OpenAiService;
+import com.example.demospringai.services.AiService;
 
 @Controller
 public class ImageAnalyzerController {
@@ -16,7 +16,7 @@ public class ImageAnalyzerController {
     private static final String UPLOAD_DIR = "/Users/bharaththippireddy/Documents/springai/images/uploads/";
     
     @Autowired
-    private OpenAiService service;
+    private AiService service;
 
     // Display the image upload form
     @GetMapping("showImageAnalyzer")

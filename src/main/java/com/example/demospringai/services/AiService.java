@@ -3,6 +3,8 @@ package com.example.demospringai.services;
 import com.example.demospringai.text.prompttemplate.CountryCuisines;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -13,12 +15,13 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class OpenAiService {
+public class AiService {
 
 	private ChatClient chatClient;
 
@@ -28,9 +31,9 @@ public class OpenAiService {
     @Autowired
     private VectorStore vectorStore;
 
-    public OpenAiService(ChatClient.Builder builder) {
-        //Adding advisor to keep previous chat records for answering
-        this.chatClient = builder.defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory())).build();
+    public AiService(ChatClient.Builder builder) {
+        //Adding advisor to keep previous chat records for answering and using RAG
+        this.chatClient = builder.defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory()), new SimpleLoggerAdvisor()).build();
     }
     public ChatResponse generateAnswer(String question) {
         //OpenAiChatOptions options= new OpenAiChatOptions();
@@ -40,6 +43,10 @@ public class OpenAiService {
 //        options.setTemperature(0.7);
 //        options.setMaxTokens(20);
         return chatClient.prompt(new Prompt(question)).call().chatResponse();
+    }
+
+    public Flux<String> streamAnswer(String message) {
+        return chatClient.prompt(new Prompt(message)).stream().content();
     }
 
 
@@ -108,4 +115,8 @@ public class OpenAiService {
         return vectorStore.similaritySearch(SearchRequest.builder().query(query).topK(3).build());
     }
 
+
+    public String getProductData(String query) {
+        return chatClient.prompt(query).advisors(new QuestionAnswerAdvisor(vectorStore)).call().content();
+    }
 }

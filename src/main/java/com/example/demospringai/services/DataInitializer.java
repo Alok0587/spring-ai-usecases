@@ -27,5 +27,9 @@ public class DataInitializer {
         List<Document> documents = tokenTextSplitter.split(jobListReader.get());
         vectorStore.add(documents);
 
+        TextReader productDataReader = new TextReader(new ClassPathResource("product-data.txt"));
+        TokenTextSplitter tokenTextSplitter1 = new TokenTextSplitter(100,100,5,1000,true);
+        List<Document> documents1 = tokenTextSplitter1.split(productDataReader.get());
+        vectorStore.add(documents1);
     }
 }

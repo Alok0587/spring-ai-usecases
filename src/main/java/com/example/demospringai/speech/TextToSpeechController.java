@@ -8,12 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demospringai.services.OpenAiService;
+import com.example.demospringai.services.AiService;
 @Controller
 public class TextToSpeechController {
 
 	@Autowired
-	private OpenAiService service;
+	private AiService service;
 
 	// Display the image upload form
 	@GetMapping("/showTextToSpeech")
